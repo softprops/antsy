@@ -18,7 +18,7 @@ You can compose escape sequences and text with immutable `antsy.Buffers`
 
 ![pic](antsy.png)
 
-Buffers are meant to be appenable and chainable. Unike `java.lang.Appendable`, whose interfaces return Unit, Buffers implements an `java.lang.Appendable`-like interface `Appends[T]` where append operations return type `T`. 
+Buffers are meant to be appenable and chainable. Unike `java.lang.Appendable`, whose interfaces return Unit, Buffers implement an `java.lang.Appendable`-like interface `Appends[T]` where append operations return type `T`. 
 
 ```scala
 val b: antsy.Buffer = antsy.Buffer().append("appended")
