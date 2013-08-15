@@ -50,7 +50,7 @@ For bold styles...
 ```scala
 antsy.Buffer()
   .bold.append("loud")
-  .unBold.append("soft")
+  .noBold.append("soft")
   .reset
 ```
 
@@ -59,7 +59,7 @@ For italics...
 ```scala
 antsy.Buffer()
   .italic.append("emphaize")
-  .unitalic.append("std")
+  .noItalic.append("std")
   .reset
 ```
 
