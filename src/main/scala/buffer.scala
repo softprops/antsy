@@ -5,11 +5,28 @@ trait Appends[T] {
   def append(cs: CharSequence): T
 }
 
+trait ColorConversions {
+  def fromRgb(c: (Int, Int, Int)): Int = {
+    println(c)
+    def conv(i: Int) = math.round(i / 255 * 5)
+    val r = 16 + (conv(c._1) * 36) + (conv(c._2) * 6) + conv(c._3)
+    println(r)
+    r
+  }
+  def fromHex(str: String): (Int, Int, Int) = {
+    def conv(s: String) = Integer.parseInt(s, 16)
+    val c = if (str.startsWith("#")) str.substring(1) else str
+    (conv(c.substring(0, 2)),
+     conv(c.substring(2, 4)),
+     conv(c.substring(4, 6)))
+  }
+}
+
 case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
   extends Appends[Buffer] {
 
   case class Colors(buffer: Buffer, base: Int, current: Option[Int] = None)
-    extends Appends[Colors] {
+    extends Appends[Colors] with ColorConversions {
 
     override def append(c: Char) = copy(buffer.append(c))
     override def append(cs: CharSequence) = copy(buffer.append(cs))
@@ -18,6 +35,15 @@ case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
     def andThen = buffer
 
     // colors
+    def rgb(color: (Int, Int, Int)) =
+      apply(fromRgb(color).toString)
+
+    def hex(color: String) =
+      rgb(fromHex(color))
+
+    private def apply(convCode: String) =
+      copy(buffer = buffer.append(
+        Term.prefix + (base + 38) + ";5;" + convCode + Term.suffix))
 
     def apply(code: Int) =
       current.filter(_ == code).map( _ => this )
