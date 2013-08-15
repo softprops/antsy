@@ -36,6 +36,8 @@ antsy.Buffer()
   .andThen.reset
 ```
 
+![bg](antsy_bg.png)
+
 That's it.
 
 Doug Tangren (softprops) 2013
