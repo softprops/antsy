@@ -33,6 +33,12 @@ case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
 
     // colors
 
+    def rainbow(cs: CharSequence) =
+      ((this, Wheels.shuffled) /: cs.toString.toArray) {
+        case ((colors, wheel), char) =>
+          (colors(wheel.get).append(char), wheel.turn)
+      }._1
+
     def rgb(color: (Int, Int, Int)) =
       apply(fromRgb(color).toString)
 
