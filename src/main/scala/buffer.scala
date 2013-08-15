@@ -7,11 +7,8 @@ trait Appends[T] {
 
 trait ColorConversions {
   def fromRgb(c: (Int, Int, Int)): Int = {
-    println(c)
     def conv(i: Int) = math.round(i / 255 * 5)
-    val r = 16 + (conv(c._1) * 36) + (conv(c._2) * 6) + conv(c._3)
-    println(r)
-    r
+    16 + (conv(c._1) * 36) + (conv(c._2) * 6) + conv(c._3)
   }
   def fromHex(str: String): (Int, Int, Int) = {
     def conv(s: String) = Integer.parseInt(s, 16)
@@ -35,6 +32,7 @@ case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
     def andThen = buffer
 
     // colors
+
     def rgb(color: (Int, Int, Int)) =
       apply(fromRgb(color).toString)
 
@@ -71,6 +69,16 @@ case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
     def brightMagenta = apply(Term.colors.bright.magenta)
     def brightCyan = apply(Term.colors.bright.cyan)
     def brightWhite = apply(Term.colors.bright.white)
+
+    def bold = append(Term.prefix + Term.styles.bold + Term.suffix)
+    def unbold = append(Term.prefix + Term.reset.bold + Term.suffix)
+    def italic = append(Term.prefix + Term.styles.italic + Term.suffix)
+    def unitalic = append(Term.prefix + Term.reset.italic + Term.suffix)
+    def underline = append(Term.prefix + Term.styles.underline + Term.suffix)
+    def noUnderline = append(Term.prefix + Term.reset.underline + Term.suffix)
+    def invert = append(Term.prefix + Term.styles.inverse + Term.suffix)
+    def unvert = append(Term.prefix + Term.reset.inverse + Term.suffix)
+
     override def toString = buffer.toString
   } 
 
@@ -79,6 +87,16 @@ case class Buffer(underlying: Seq[Char] = Seq.empty[Char])
   def fg = Colors(this, 0)
   def bg = Colors(this, 10)
   def reset = append(Term.prefix + '0' + Term.suffix)
+
+
+  def bold = append(Term.prefix + Term.styles.bold + Term.suffix)
+  def unbold = append(Term.prefix + Term.reset.bold + Term.suffix)
+  def italic = append(Term.prefix + Term.styles.italic + Term.suffix)
+  def unitalic = append(Term.prefix + Term.reset.italic + Term.suffix)
+  def underline = append(Term.prefix + Term.styles.underline + Term.suffix)
+  def noUnderline = append(Term.prefix + Term.reset.underline + Term.suffix)
+  def invert = append(Term.prefix + Term.styles.inverse + Term.suffix)
+  def unvert = append(Term.prefix + Term.reset.inverse + Term.suffix)
 
   override def toString = underlying.mkString("")
 }
