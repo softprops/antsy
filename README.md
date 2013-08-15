@@ -26,6 +26,9 @@ val b: antsy.Buffer = antsy.Buffer().append("appended")
 
 A `Buffer`s `toString` implementation returns a printable string containing escape sequences.
 
+
+### Colors
+
 A `Buffer` exposes colors through the `fg` ( foreground ) and `bg` ( background ) methods. From either ground you can call `fg` or `bg` to switch grounds or call `andThen` to return the default context. Escape sequences defined in `antsy.Term` are exposed as methods on `Buffer` which simply append. This interface is meant to be infinitely chainable so you can compose both colors and text.
 
 
@@ -37,6 +40,46 @@ antsy.Buffer()
 ```
 
 ![bg](antsy_bg.png)
+
+### Styles
+
+A `Buffer` exposes styles like bold, italic, underline, and inversion as methods.
+
+For bold styles...
+
+```scala
+antsy.Buffer()
+  .bold.append("loud")
+  .unBold.append("soft")
+  .reset
+```
+
+For italics...
+
+```scala
+antsy.Buffer()
+  .italic.append("emphaize")
+  .unitalic.append("std")
+  .reset
+```
+
+For underlines...
+
+```scala
+antsy.Buffer()
+  .underline.append("remember me")
+  .noUnderline.append("skim over me")
+  .reset
+```
+
+For inversion of styles...
+
+```scala
+antsy.Buffer()
+  .invert.append("beep")
+  .unvert.append("boop")
+  .reset
+```
 
 That's it.
 
